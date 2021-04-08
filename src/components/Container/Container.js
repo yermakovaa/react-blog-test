@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import s from './Container.module.css';
+import Wrapper from './Container.style';
 
 function Container({ children }) {
-  return <div className={s.container}>{children}</div>;
+  return <Wrapper>{children}</Wrapper>;
 }
 
 Container.propTypes = {
