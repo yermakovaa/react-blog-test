@@ -11,7 +11,7 @@ const items = createReducer([], {
 });
 
 const post = createReducer([], {
-  [actions.retrievePostSuccess]: (state, { payload }) => [...state, payload],
+  [actions.retrievePostSuccess]: (_, { payload }) => payload,
 });
 
 const isLoading = createReducer(false, {
