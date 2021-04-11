@@ -58,8 +58,6 @@ export const BtnPost = styled(Button)`
   margin-top: 20px !important;
 `;
 
-export const Delete = styled(Button)``;
-
 export const LinkMore = styled(Link)`
   margin-right: 10px;
   color: #fff;

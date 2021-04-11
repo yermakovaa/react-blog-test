@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouteMatch, useLocation } from 'react-router-dom';
-import { postsOperations, postsSelectors } from '../../redux/posts';
+import { getAll, add, deleteById } from '../../redux/post/postOperations';
+import { getData } from '../../redux/post/postSelectors';
 import {
   List,
   Item,
@@ -11,19 +12,19 @@ import {
   Field,
   TextArea,
   BtnPost,
-  Delete,
   LinkMore,
 } from './HomeView.style';
+import { Button } from '@material-ui/core';
 
 const HomeView = () => {
   const dispatch = useDispatch();
-  const posts = useSelector(postsSelectors.getPosts);
+  const posts = useSelector(getData);
   const { url } = useRouteMatch();
   const location = useLocation();
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
-  useEffect(() => dispatch(postsOperations.fetchPosts()), [dispatch]);
+  useEffect(() => dispatch(getAll()), [dispatch]);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -44,7 +45,7 @@ const HomeView = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(postsOperations.createPost(title, body));
+    dispatch(add({ title, body }));
     setTitle('');
     setBody('');
   };
@@ -67,14 +68,14 @@ const HomeView = () => {
                 Read more
               </LinkMore>
 
-              <Delete
+              <Button
                 type="button"
                 variant="contained"
                 color="secondary"
-                onClick={() => dispatch(postsOperations.deletePost(id))}
+                onClick={() => dispatch(deleteById(id))}
               >
                 Delete
-              </Delete>
+              </Button>
             </Item>
           ))}
         </List>

@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { postsOperations, postsSelectors } from '../../redux/posts';
+import {
+  getById,
+  updateById,
+  addComment,
+} from '../../redux/post/postOperations';
+import { getData } from '../../redux/post/postSelectors';
 import { useParams, useHistory } from 'react-router-dom';
 import {
   Wrapper,
@@ -16,7 +21,7 @@ import { TextField, Button } from '@material-ui/core';
 
 const PostView = () => {
   const dispatch = useDispatch();
-  const post = useSelector(postsSelectors.getPost);
+  const post = useSelector(getData);
   const { id } = useParams();
   const history = useHistory();
 
@@ -26,7 +31,7 @@ const PostView = () => {
   const [comment, setComment] = useState(false);
 
   useEffect(() => {
-    dispatch(postsOperations.retrievePost(id));
+    dispatch(getById(id));
   }, [dispatch, id]);
 
   const handleChange = e => {
@@ -48,7 +53,7 @@ const PostView = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(postsOperations.updatePost(id, title, body));
+    dispatch(updateById({ id, title, body }));
     setTitle('');
     setBody('');
     setChangePost(false);
@@ -66,7 +71,7 @@ const PostView = () => {
 
   const handleSubmitComment = e => {
     e.preventDefault();
-    dispatch(postsOperations.createComment(id, body));
+    dispatch(addComment({ id, body }));
     setBody('');
     setComment(false);
   };
